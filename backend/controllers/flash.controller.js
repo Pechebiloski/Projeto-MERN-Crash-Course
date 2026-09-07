@@ -1,8 +1,10 @@
-import flashs from "../models/flashs.model";
+import flashs from "../models/flashs.model.js";
+import mongoose from "mongoose";
+
 
 export const getFlashs = async (request, response) => {
     try  { 
-        const flashsList = await flash.find();
+        const flashsList = await flashs.find();
         response.status(200).json({
             success: true,
             data: flashsList
@@ -81,6 +83,14 @@ export const UpdadteFlash = async (request, response) => {
 
 export const deleteFlash = async(request, response) => {
     const {id} = request.params;
+
+    
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return response.status(404).json({
+            success: false,
+            message: "Invailid Flash Id"
+        });
+    }
 
     try {
         const flash = await flashs.findById(id);

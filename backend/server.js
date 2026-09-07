@@ -11,11 +11,13 @@ dotenv.config();
 
 const app = express();
 
+const PORT = process.env.PORT || 5000;
+
 app.use(express.json());
 
 app.use("/api/flashs", flashRoutes)
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     connectDB();
-    console.log("server started at http://localhost:5000");
+    console.log("server started at http://localhost:" + PORT);
 });
